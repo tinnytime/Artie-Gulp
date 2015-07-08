@@ -5,14 +5,8 @@ Artie is a lightweight and efficient front-end framework for developing fast and
 
 ## Quick start
 
-1. Clone the git repo `git clone https://github.com/indrekpaas/Artie.git` and checkout the `master` branch or download the [latest version](https://github.com/indrekpaas/Artie/archive/master.zip) and unpack it.
-2. Add project to CodeKit and you're ready to roll.
-
-
-## Requirements
-
-* [CodeKit](https://incident57.com/codekit/)
-* [EditorConfig](http://editorconfig.org/#download) plugin for your favorite text editor
+* `sudo npm install` to install dependencies
+* `gulp watch` to listen for scss & js changes
 
 
 ## Browser support
@@ -24,17 +18,3 @@ Artie is a lightweight and efficient front-end framework for developing fast and
 * Safari *(last 2 versions)*
 
 
-## Documentation
-
-* [Changelog](https://github.com/indrekpaas/Artie/releases)
-* [SassDoc](http://indrekpaas.github.io/Artie/sassdoc/)
-
-
-## Roadmap
-
-* Wiki
-
-
-## License
-
-Artie is available under the [MIT license](https://github.com/indrekpaas/Artie/blob/master/LICENSE).
