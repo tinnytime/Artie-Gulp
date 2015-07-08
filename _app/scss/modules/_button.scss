@@ -1,0 +1,41 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+// Turn this placeholder into class (%Button -> .Button)
+// for referencing it from the markup.
+// This way these styles won't pollute the output if left unused.
+
+%Button {
+  @extend %transitions;
+  border: 0;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  vertical-align: top;
+  white-space: nowrap;
+
+  &:hover:not(:disabled) {
+    text-decoration: none;
+  }
+
+  &:focus:not(:disabled) {
+
+  }
+
+  &:active:not(:disabled) {
+
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}

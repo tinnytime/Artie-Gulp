@@ -1,0 +1,54 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+/// Include a `@font-face` declaration.
+/// @group api
+///
+/// @author Indrek Paas
+/// @link
+///   http://caniuse.com/#search=woff
+///   Can I use: WOFF/2 support
+///
+/// @param {string} $family Font-family name
+/// @param {string} $filename Path to file name without extension
+/// @param {string} $formats [woff2 woff] Allowed font formats are `woff2` and `woff`
+/// @param {string} $weight [normal] Font weight
+/// @param {string} $style [normal] Font style
+///
+/// @example scss Input
+///   @include font-face("My Font", "../fonts/myfont");
+/// @example css Output
+///   @font-face {
+///     font-family: "My Font";
+///     font-style: normal;
+///     font-weight: normal;
+///     src: url("../fonts/myfont.woff2") format("woff2"),
+///          url("../fonts/myfont.woff") format("woff");
+///   }
+///
+/// @require {function} is
+
+@mixin font-face($family, $filename, $formats: woff2 woff, $weight: normal, $style: normal) {
+  $src: ();
+
+  @each $format in $formats {
+    @if is($format, "woff2" "woff") {
+      $src: append($src, url("#{$filename}.#{$format}") format("#{$format}"), comma);
+    } @else {
+      @error "Invalid format `#{$format}`.";
+    }
+  }
+
+  @font-face {
+    font-family: $family;
+    font-style: $style;
+    font-weight: $weight;
+    src: $src;
+  }
+}

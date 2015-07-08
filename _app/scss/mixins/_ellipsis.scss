@@ -1,0 +1,40 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+/// Truncate text by adding an ellipsis to represent overflow.
+/// @group api
+///
+/// @author thoughtbot
+/// @link
+///   http://bourbon.io/docs/#ellipsis
+///   Ellipsis
+///
+/// @param {string} $display [inline-block] Display property
+/// @param {number} $max-width [100%] Maximum width
+///
+/// @example scss Input
+///   span {
+///     @include ellipsis;
+///   }
+/// @example css Output
+///   span {
+///     display: inline-block;
+///     max-width: 100%;
+///     overflow: hidden;
+///     text-overflow: ellipsis;
+///     white-space: nowrap;
+///   }
+
+@mixin ellipsis($display: inline-block, $max-width: 100%) {
+  display: $display;
+  max-width: $max-width;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

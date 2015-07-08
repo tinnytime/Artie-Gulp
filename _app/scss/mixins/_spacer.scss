@@ -1,0 +1,52 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+/// Add consistent spacing in between or within elements.
+/// @group api
+///
+/// @author Indrek Paas
+///
+/// @param {string} $property Allowed properties are `border`, `margin` and `padding`
+/// @param {number} $value Single or shorthand value
+///
+/// @example scss Input
+///   div {
+///     @include spacer(padding, 4em);
+///   }
+/// @example css Output
+///   div {
+///     padding-bottom: 4em;
+///     padding-top: 4em;
+///   }
+///
+/// @require {function} is
+
+@mixin spacer($property, $value) {
+  @if is($property, "border" "margin" "padding") {
+    // Use shorthand declaration if more than one value is passed
+    @if length($value) > 1 {
+      #{$property}: #{$value};
+    } @else {
+      #{$property}-bottom: #{$value};
+      #{$property}-top: #{$value};
+    }
+
+    // Remove :first-child and :last-child margins
+    @if is($property, "margin") {
+      &:first-child {
+        margin-top: 0;
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  } @else {
+    @error "Invalid property `#{$property}`.";
+  }
+}

@@ -1,0 +1,61 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+//  EMBEDDED FONTS ---------------------------------------------------------
+
+// @include font-face("My Font", "../fonts/myfont");
+// @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+
+
+
+//  BASE TYPOGRAPHY --------------------------------------------------------
+
+html {
+  @include fluid-type(64px, 1600px, 12px, 24px);
+  color: $mineshaft;
+  font-family: $helvetica;
+  line-height: 1.375;
+
+  ::selection {
+    background: $mineshaft;
+    color: $white;
+    text-shadow: none;
+  }
+}
+
+
+
+
+//  GLOBAL HEADINGS --------------------------------------------------------
+
+h1, h2, h3, h4, h5, h6 {
+
+}
+
+
+
+
+//  GLOBAL LINKS -----------------------------------------------------------
+
+a {
+  @extend %transitions;
+
+  &:hover {
+
+  }
+
+  &:focus {
+
+  }
+
+  &:active {
+
+  }
+}

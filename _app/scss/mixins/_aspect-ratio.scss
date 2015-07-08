@@ -1,0 +1,55 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+/// Maintain element's aspect ratio at different widths.
+/// @group api
+///
+/// @author Indrek Paas
+/// @link
+///   http://andyshora.com/css-image-container-padding-hack.html
+///   Sizing Fluid Image Containers with a Little CSS Padding Hack
+///
+/// @param {number} $ratio [16/9] Aspect ratio
+/// @param {string} $display [block] Display property
+/// @param {string} $position [relative] Position property
+/// @param {string} $child ["*"] Immediate child element
+///
+/// @example scss Input
+///   div {
+///     @include aspect-ratio;
+///   }
+/// @example css Output
+///   div {
+///     display: block;
+///     height: 0;
+///     padding-top: 56.25%;
+///     position: relative;
+///   }
+///   div > * {
+///     height: 100%;
+///     left: 0;
+///     position: absolute;
+///     top: 0;
+///     width: 100%;
+///   }
+
+@mixin aspect-ratio($ratio: 16/9, $display: block, $position: relative, $child: "*") {
+  display: $display;
+  height: 0;
+  padding-top: percentage(1 / $ratio);
+  position: $position;
+
+  > #{$child} {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+}

@@ -1,0 +1,82 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+/// Create CSS triangles of any size and direction.
+/// @group api
+///
+/// @author Indrek Paas
+/// @link
+///   https://css-tricks.com/snippets/css/css-triangle/
+///   CSS Triangle
+///
+/// @param {string} $direction Triangle point direction
+/// @param {number} $width Width
+/// @param {number} $height Height
+/// @param {string} $color Color
+/// @param {bool} $inherit [false] Inherit base styles from the cascade
+///
+/// @example scss Input
+///   div {
+///     @include triangle("top right", 1em, 1em, #39f);
+///   }
+///   div {
+///     @include triangle("left", 1em, 2em, #39f, true);
+///   }
+/// @example css Output
+///   div {
+///     border: solid transparent;
+///     height: 0;
+///     transform: scale(1.001);
+///     width: 0;
+///     border-bottom-color: #39f;
+///     border-width: 0 0.5em 1em 0.5em;
+///   }
+///   div {
+///     border-bottom-color: #39f;
+///     border-width: 0 0.5em 2em 0.5em;
+///   }
+///
+/// @require {function} is
+
+@mixin triangle($direction, $width, $height, $color, $inherit: false) {
+  @if not $inherit {
+    border: solid transparent;
+    height: 0;
+    transform: scale(1.001);
+    width: 0;
+  }
+
+  @if is($direction, "top") {
+    border-bottom-color: $color;
+    border-width: 0 ($width / 2) $height ($width / 2);
+  } @else if is($direction, "top right" "right top") {
+    border-right-color: $color;
+    border-width: 0 $width $height 0;
+  } @else if is($direction, "right") {
+    border-left-color: $color;
+    border-width: ($height / 2) 0 ($height / 2) $width;
+  } @else if is($direction, "bottom right" "right bottom") {
+    border-bottom-color: $color;
+    border-width: 0 0 $height $width;
+  } @else if is($direction, "bottom") {
+    border-top-color: $color;
+    border-width: $height ($width / 2) 0 ($width / 2);
+  } @else if is($direction, "bottom left" "left bottom") {
+    border-left-color: $color;
+    border-width: $height 0 0 $width;
+  } @else if is($direction, "left") {
+    border-right-color: $color;
+    border-width: ($height / 2) $width ($height / 2) 0;
+  } @else if is($direction, "top left" "left top") {
+    border-top-color: $color;
+    border-width: $height $width 0 0;
+  } @else {
+    @error "Invalid direction `#{$direction}`.";
+  }
+}

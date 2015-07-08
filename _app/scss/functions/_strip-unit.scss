@@ -1,0 +1,29 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+/// Strip unit from a number.
+/// @group api
+///
+/// @author Hugo Giraudel
+/// @link
+///   http://hugogiraudel.com/2013/08/12/sass-functions/
+///   A couple of Sass functions
+///
+/// @param {number} $value Value
+///
+/// @example scss Input
+///   line-height: strip-unit(4.2em);
+/// @example css Output
+///   line-height: 4.2;
+///
+/// @return {number}
+
+@function strip-unit($value) {
+  @return $value / ($value * 0 + 1);
+}

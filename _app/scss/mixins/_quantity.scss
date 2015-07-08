@@ -1,0 +1,94 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+/// Apply styles based on number of elements.
+/// @group api
+///
+/// @author Indrek Paas
+/// @link
+///   http://alistapart.com/article/quantity-queries-for-css
+///   Quantity Queries for CSS
+///
+/// @param {number | string} $arg Operator and/or number
+///
+/// @example scss Input
+///   div {
+///     @include quantity(8) {
+///       /* 8 elements */
+///     }
+///     @include quantity("<=8") {
+///       /* Fewer than or equal to 8 elements */
+///     }
+///     @include quantity(">8") {
+///       /* More than 8 elements */
+///     }
+///   }
+/// @example css Output
+///   div:nth-last-child(8):first-child,
+///   div:nth-last-child(8):first-child ~ div {
+///     /* 8 elements */
+///   }
+///   div:nth-last-child(-n+8):first-child,
+///   div:nth-last-child(-n+8):first-child ~ div {
+///     /* Fewer than or equal to 8 elements */
+///   }
+///   div:nth-last-child(n+9),
+///   div:nth-last-child(n+9) ~ div {
+///     /* More than 8 elements */
+///   }
+///
+/// @require {function} number
+///
+/// @todo Quantity ranges
+
+@mixin quantity($arg) {
+  @if type-of($arg) == number {
+    // Quantity N
+    &:nth-last-child(#{$arg}):first-child,
+    &:nth-last-child(#{$arg}):first-child ~ & {
+      @content;
+    }
+  } @else if str-slice($arg, 1, 1) == "<" {
+    @if str-slice($arg, 2, 2) == "=" {
+      // Fewer than or equal to N
+      $arg: number(str-slice($arg, 3));
+
+      &:nth-last-child(-n+#{$arg}):first-child,
+      &:nth-last-child(-n+#{$arg}):first-child ~ & {
+        @content;
+      }
+    } @else {
+      // Fewer than N
+      $arg: number(str-slice($arg, 2));
+
+      &:nth-last-child(-n+#{$arg - 1}):first-child,
+      &:nth-last-child(-n+#{$arg - 1}):first-child ~ & {
+        @content;
+      }
+    }
+  } @else if str-slice($arg, 1, 1) == ">" {
+    @if str-slice($arg, 2, 2) == "=" {
+      // More than or equal to N
+      $arg: number(str-slice($arg, 3));
+
+      &:nth-last-child(n+#{$arg}),
+      &:nth-last-child(n+#{$arg}) ~ & {
+        @content;
+      }
+    } @else {
+      // More than N
+      $arg: number(str-slice($arg, 2));
+
+      &:nth-last-child(n+#{$arg + 1}),
+      &:nth-last-child(n+#{$arg + 1}) ~ & {
+        @content;
+      }
+    }
+  }
+}

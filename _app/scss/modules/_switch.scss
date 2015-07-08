@@ -1,0 +1,50 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+// Turn these placeholders into classes (%Switch -> .Switch)
+// for referencing them from the markup.
+// This way these styles won't pollute the output if left unused.
+
+%Switch {
+  @extend %visually-hidden;
+
+  + label::before {
+
+  }
+
+  &:hover:not(:disabled) + label::before {
+
+  }
+
+  &:focus:not(:disabled) + label::before {
+
+  }
+
+  &:checked:not(:disabled) + label::before {
+
+  }
+
+  &:disabled + label::before {
+
+  }
+}
+
+%Switch--checkbox {
+
+  + label::before {
+
+  }
+}
+
+%Switch--radio {
+
+  + label::before {
+
+  }
+}

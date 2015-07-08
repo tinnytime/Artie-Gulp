@@ -1,0 +1,46 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+////
+/// @group api
+///
+/// @author thoughtbot
+/// @link
+///   https://robots.thoughtbot.com/controlling-color-with-sass-color-functions
+///   Controlling color with Sass color functions
+///
+/// @param {string} $color Color to be mixed
+/// @param {number} $percentage Mix strength
+///
+/// @return {string} Color
+////
+
+
+/// Tint color (tint is a mix of color with white).
+///
+/// @example scss Input
+///   color: tint(#f90, 42%);
+/// @example css Output
+///   color: #ffc36b;
+
+@function tint($color, $percentage) {
+  @return mix(#ffffff, $color, $percentage);
+}
+
+
+/// Shade color (shade is a mix of color with black).
+///
+/// @example scss Input
+///   color: shade(#39f, 42%);
+/// @example css Output
+///   color: #1d5893;
+
+@function shade($color, $percentage) {
+  @return mix(#000000, $color, $percentage);
+}

@@ -1,0 +1,44 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+/// Add vendor prefixes to CSS properties.
+/// This mixin caters for properties which haven't made it into the spec (yet)
+/// and thus are unsupported by Autoprefixer.
+/// @group api
+///
+/// @author Indrek Paas
+/// @link
+///   https://github.com/postcss/autoprefixer#why-doesnt-autoprefixer-support-appearance
+///   Why doesn’t Autoprefixer support `appearance`?
+///
+/// @param {string} $property Property
+/// @param {number | string} $value Value
+/// @param {string} $prefixes Vendor prefix(es)
+///
+/// @example scss Input
+///   div {
+///     @include prefixer(appearance, none, webkit moz);
+///   }
+/// @example css Output
+///   div {
+///     -webkit-appearance: none;
+///     -moz-appearance: none;
+///   }
+///
+/// @require {function} is
+
+@mixin prefixer($property, $value, $prefixes) {
+  @each $prefix in $prefixes {
+    @if is($prefix, "webkit" "moz" "ms" "o") {
+      -#{$prefix}-#{$property}: #{$value};
+    } @else {
+      @error "Invalid prefix `#{$prefix}`.";
+    }
+  }
+}

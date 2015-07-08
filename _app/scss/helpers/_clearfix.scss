@@ -1,0 +1,29 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+/// Clear element's children to contain overflows in float-based layouts.
+/// If you don't need to support IE9 or lower, you should use flexbox instead.
+/// @group helpers
+///
+/// @author cssmojo
+/// @link
+///   http://cssmojo.com/latest_new_clearfix_so_far/
+///   The very latest new new way to do "clearfix"
+
+@mixin clearfix {
+  &::after {
+    clear: both;
+    content: "";
+    display: table;
+  }
+}
+
+%clearfix {
+  @include clearfix;
+}

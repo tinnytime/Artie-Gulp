@@ -1,0 +1,100 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+@if map-get($entry-content, output-styles) {
+
+  // Generate variables
+  $font-scale:  map-get($entry-content, font-scale);
+  $line-height: map-get($entry-content, line-height);
+
+
+  // Font size scales
+  $font-scales: (
+    default          : ( h1: 4.236 , h2: 2.618 , h3: 1.618 , h4: 1, h5: 0.618 , h6: 0.382  ),
+    golden           : ( h1: 2     , h2: 1.5   , h3: 1.17  , h4: 1, h5: 0.83  , h6: 0.75   ),
+    traditional      : ( h1: 1.5   , h2: 1.3333, h3: 1.1667, h4: 1, h5: 0.9167, h6: 0.8333 ),
+
+    double-octave    : ( h1: 64    , h2: 16    , h3: 4     , h4: 1, h5: 0.25  , h6: 0.0625 ),
+    major-twelfth    : ( h1: 27    , h2: 9     , h3: 3     , h4: 1, h5: 0.3333, h6: 0.1111 ),
+    major-eleventh   : ( h1: 18.963, h2: 7.1111, h3: 2.6667, h4: 1, h5: 0.375 , h6: 0.1406 ),
+    major-tenth      : ( h1: 15.625, h2: 6.25  , h3: 2.5   , h4: 1, h5: 0.4   , h6: 0.16   ),
+    octave           : ( h1: 8     , h2: 4     , h3: 3     , h4: 1, h5: 0.5   , h6: 0.25   ),
+    major-seventh    : ( h1: 6.5918, h2: 3.5156, h3: 1.875 , h4: 1, h5: 0.5333, h6: 0.2844 ),
+    minor-seventh    : ( h1: 5.6187, h2: 3.1605, h3: 1.7778, h4: 1, h5: 0.5625, h6: 0.3164 ),
+    major-sixth      : ( h1: 4.6296, h2: 2.7778, h3: 1.6667, h4: 1, h5: 0.6   , h6: 0.36   ),
+    minor-sixth      : ( h1: 4.096 , h2: 2.56  , h3: 1.6   , h4: 1, h5: 0.625 , h6: 0.3906 ),
+    fifth            : ( h1: 3.375 , h2: 2.25  , h3: 1.5   , h4: 1, h5: 0.6667, h6: 0.4444 ),
+    augmented-fourth : ( h1: 2.8284, h2: 1.9999, h3: 1.4142, h4: 1, h5: 0.7071, h6: 0.5    ),
+    fourth           : ( h1: 2.3704, h2: 1.7778, h3: 1.3333, h4: 1, h5: 0.75  , h6: 0.5625 ),
+    major-third      : ( h1: 1.9531, h2: 1.5625, h3: 1.25  , h4: 1, h5: 0.8   , h6: 0.64   ),
+    minor-third      : ( h1: 1.728 , h2: 1.44  , h3: 1.2   , h4: 1, h5: 0.8333, h6: 0.6944 ),
+    major-second     : ( h1: 1.4238, h2: 1.2656, h3: 1.125 , h4: 1, h5: 0.8889, h6: 0.7901 ),
+    minor-second     : ( h1: 1.2136, h2: 1.1378, h3: 1.0667, h4: 1, h5: 0.9375, h6: 0.8789 )
+  );
+
+
+  // Output styles
+  .EntryContent {
+    line-height: $line-height;
+
+
+    // Headings
+    @if map-has-key($font-scales, $font-scale) {
+      @for $i from 1 through 6 {
+        h#{$i} {
+          font-size: map-deep-get($font-scales, $font-scale, h#{$i}) * 1em;
+        }
+      }
+    } @else {
+      @error "Invalid font scale `#{$font-scale}`.";
+    }
+
+
+    // Margins
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre, address, dl, ol, ul, table {
+      margin: ($line-height * 1em) 0;
+    }
+
+
+    // Content styles
+    ol, ul {
+      padding: 0 0 0 ($line-height * 1em);
+      text-align: left;
+    }
+
+    ol li {
+      list-style: decimal outside;
+    }
+
+    ul li {
+      list-style: disc outside;
+    }
+
+    li ol, li ul {
+      margin: 0;
+    }
+
+    dd {
+      margin: 0 0 0 ($line-height * 1em);
+    }
+
+
+    // Remove :first-child & :last-child margins
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre, address, dl, ol, ul, table {
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

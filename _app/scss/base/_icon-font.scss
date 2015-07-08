@@ -1,0 +1,66 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+//  EMBEDDED ICON FONT -----------------------------------------------------
+
+// @include font-face("Icons", "../fonts/icons", woff);
+
+
+
+
+//  ICONS ------------------------------------------------------------------
+
+/// Customizable icon list for using with `icon` mixin.
+/// You can specify both the icon names and corresponding PUA codes.
+/// @group icon-font
+/// @type map
+///
+/// @author Indrek Paas
+///
+/// @prop {key} icon-01 [\e600] Icon name
+
+$icons: (
+  icon-01: \e600,
+  icon-02: \e601,
+  icon-03: \e602,
+  icon-04: \e603,
+  icon-05: \e604,
+  icon-06: \e605,
+  icon-07: \e606,
+  icon-08: \e607,
+  icon-09: \e608,
+  icon-10: \e609,
+  icon-11: \e60a,
+  icon-12: \e60b,
+  icon-13: \e60c,
+  icon-14: \e60d,
+  icon-15: \e60e,
+  icon-16: \e60f
+);
+
+
+
+
+//  ICON FONT PLACEHOLDER --------------------------------------------------
+
+/// Base styles for an icon.
+/// @group icon-font
+///
+/// @author Indrek Paas
+
+%icon-font {
+  display: inline-block;
+  font-family: "Icons";
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  speak: none;
+  text-transform: none;
+  vertical-align: top;
+}

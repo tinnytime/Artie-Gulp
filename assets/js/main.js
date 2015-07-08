@@ -1,0 +1,1 @@
+!function(n){"use strict";var i={init:function(){i.myFunction()},myFunction:function(){}};n(function(){i.init()})}(jQuery);

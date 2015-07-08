@@ -1,0 +1,29 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+/// Get values from nested maps.
+/// @group api
+///
+/// @author Hugo Giraudel
+/// @link
+///   https://css-tricks.com/snippets/sass/deep-getset-maps/
+///   Deep Get/Set in Maps
+///
+/// @param {map} $map Map
+/// @param {arglist} $keys Key chain
+///
+/// @return {*}
+
+@function map-deep-get($map, $keys...) {
+  @each $key in $keys {
+    $map: map-get($map, $key);
+  }
+
+  @return $map;
+}

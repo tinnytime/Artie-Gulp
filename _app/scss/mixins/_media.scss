@@ -1,0 +1,224 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+/// Add media queries with keywords and/or pixel value combinations.
+/// @group media-queries
+///
+/// @author Indrek Paas
+///
+/// @param {string} $expr Media query expression
+///
+/// @example scss Input
+///   div {
+///     @include media(from tablet) { /* from tablet */ }
+///     @include media(to 960px) { /* to 960px */ }
+///     @include media(tv) { /* tv */ }
+///     @include media(phone to laptop) { /* phone to laptop */ }
+///     @include media(cinema to 5120px) { /* cinema to 5120px */ }
+///     @include media(240px to tablet7) { /* 240px to tablet7 */ }
+///     @include media(620px to 1240px) { /* 620px to 1240px */ }
+///   }
+/// @example css Output
+///   @media screen and (min-width: 48rem) { div { /* from tablet */ } }
+///   @media screen and (max-width: 60rem) { div { /* to 960px */ } }
+///   @media screen and (min-width: 100.0625rem) and (max-width: 120rem) { div { /* tv */ } }
+///   @media screen and (min-width: 20rem) and (max-width: 85.375rem) { div { /* phone to laptop */ } }
+///   @media screen and (min-width: 120.0625rem) and (max-width: 320rem) { div { /* cinema to 5120px */ } }
+///   @media screen and (min-width: 15rem) and (max-width: 47.9375rem) { div { /* 240px to tablet7 */ } }
+///   @media screen and (min-width: 38.75rem) and (max-width: 77.5rem) { div { /* 620px to 1240px */ } }
+///
+/// @require {function} map-deep-get
+/// @require {function} px-rem
+/// @require {variable} devices
+
+@mixin media($expr) {
+
+  // From "device"
+  @if nth($expr, 1) == "from" and length($expr) == 2 {
+    // Is "device" string or number?
+    @if type-of(nth($expr, 2)) == string {
+      // String. Is "device" first in `$devices` map?
+      @if index(map-keys($devices), nth($expr, 2)) == 1 {
+        // Yes. No media query needed.
+        @content;
+      } @else {
+        // No. Apply media query.
+        @media screen and (min-width: px-rem(map-deep-get($devices, nth($expr, 2), min-width))) {
+          @content;
+        }
+      }
+    } @else if type-of(nth($expr, 2)) == number {
+      // Number. Apply media query.
+      @media screen and (min-width: px-rem(nth($expr, 2))) {
+        @content;
+      }
+    } @else {
+      // Neither. Throw error.
+      @error "Invalid type `#{type-of(nth($expr, 2))}`.";
+    }
+  }
+
+
+  // To "device"
+  @else if nth($expr, 1) == "to" and length($expr) == 2 {
+    // Is "device" string or number?
+    @if type-of(nth($expr, 2)) == string {
+      // String. Is "device" last in `$devices` map?
+      @if index(map-keys($devices), nth($expr, 2)) == length(map-keys($devices)) {
+        // Yes. No media query needed.
+        @content;
+      } @else {
+        // No. Apply media query.
+        @media screen and (max-width: px-rem(map-deep-get($devices, nth($expr, 2), max-width))) {
+          @content;
+        }
+      }
+    } @else if type-of(nth($expr, 2)) == number {
+      // Number. Apply media query.
+      @media screen and (max-width: px-rem(nth($expr, 2))) {
+        @content;
+      }
+    } @else {
+      // Neither. Throw error.
+      @error "Invalid type `#{type-of(nth($expr, 2))}`.";
+    }
+  }
+
+
+  // Single "device"
+  @else if map-has-key($devices, $expr) and length($expr) == 1 {
+    // Is "device" first or last in `$devices` map?
+    @if index(map-keys($devices), $expr) == 1 {
+      // First. No `min-width` required.
+      @media screen and (max-width: px-rem(map-deep-get($devices, $expr, max-width))) {
+        @content;
+      }
+    } @else if index(map-keys($devices), $expr) == length(map-keys($devices)) {
+      // Last. No `max-width` required.
+      @media screen and (min-width: px-rem(map-deep-get($devices, $expr, min-width))) {
+        @content;
+      }
+    } @else {
+      // Neither. Apply media query.
+      @media screen and (min-width: px-rem(map-deep-get($devices, $expr, min-width))) and (max-width: px-rem(map-deep-get($devices, $expr, max-width))) {
+        @content;
+      }
+    }
+  }
+
+
+  // "Device" to "device"
+  @else if nth($expr, 2) == "to" and length($expr) == 3 {
+
+    // String to string
+    @if type-of(nth($expr, 1)) == string and type-of(nth($expr, 3)) == string {
+      // Is "from device" value smaller than "to device" value?
+      @if map-deep-get($devices, nth($expr, 1), min-width) < map-deep-get($devices, nth($expr, 3), max-width) {
+        // Yes. Is "from device" first and/or "to device" last in `$devices` map?
+        @if index(map-keys($devices), nth($expr, 1)) == 1 and index(map-keys($devices), nth($expr, 3)) == length(map-keys($devices)) {
+          // "From device" is first and "to device" is last. No media query needed.
+          @content;
+        } @else if index(map-keys($devices), nth($expr, 1)) == 1 {
+          // "From device" is first. No `min-width` required.
+          @media screen and (max-width: px-rem(map-deep-get($devices, nth($expr, 3), max-width))) {
+            @content;
+          }
+        } @else if index(map-keys($devices), nth($expr, 3)) == length(map-keys($devices)) {
+          // "To device" is last. No `max-width` required.
+          @media screen and (min-width: px-rem(map-deep-get($devices, nth($expr, 1), min-width))) {
+            @content;
+          }
+        } @else {
+          // Neither. Apply media query.
+          @media screen and (min-width: px-rem(map-deep-get($devices, nth($expr, 1), min-width))) and (max-width: px-rem(map-deep-get($devices, nth($expr, 3), max-width))) {
+            @content;
+          }
+        }
+      } @else {
+        // No. Throw error.
+        @error "Invalid declaration `#{nth($expr, 1)} to #{nth($expr, 3)}` (#{map-deep-get($devices, nth($expr, 1), min-width)} to #{map-deep-get($devices, nth($expr, 3), max-width)}).";
+      }
+    }
+
+
+    // Number to string
+    @else if type-of(nth($expr, 1)) == number and type-of(nth($expr, 3)) == string {
+      // Is "from" value smaller than "to device" value?
+      @if nth($expr, 1) < map-deep-get($devices, nth($expr, 3), max-width) {
+        // Yes. Is "to device" last in `$devices` map?
+        @if index(map-keys($devices), nth($expr, 3)) == length(map-keys($devices)) {
+          // Yes. No `max-width` required.
+          @media screen and (min-width: px-rem(nth($expr, 1))) {
+            @content;
+          }
+        } @else {
+          // No. Apply media query.
+          @media screen and (min-width: px-rem(nth($expr, 1))) and (max-width: px-rem(map-deep-get($devices, nth($expr, 3), max-width))) {
+            @content;
+          }
+        }
+      } @else {
+        // No. Throw error.
+        @error "Invalid declaration `#{nth($expr, 1)} to #{nth($expr, 3)}` (#{nth($expr, 1)} to #{map-deep-get($devices, nth($expr, 3), max-width)}).";
+      }
+    }
+
+
+    // String to number
+    @else if type-of(nth($expr, 1)) == string and type-of(nth($expr, 3)) == number {
+      // Is "from device" value smaller than "to" value?
+      @if map-deep-get($devices, nth($expr, 1), min-width) < nth($expr, 3) {
+        // Yes. Is "from device" first in `$devices` map?
+        @if index(map-keys($devices), nth($expr, 1)) == 1 {
+          // Yes. No `min-width` required.
+          @media screen and (max-width: px-rem(nth($expr, 3))) {
+            @content;
+          }
+        } @else {
+          // No. Apply media query.
+          @media screen and (min-width: px-rem(map-deep-get($devices, nth($expr, 1), min-width))) and (max-width: px-rem(nth($expr, 3))) {
+            @content;
+          }
+        }
+      } @else {
+        // No. Throw error.
+        @error "Invalid declaration `#{nth($expr, 1)} to #{nth($expr, 3)}` (#{map-deep-get($devices, nth($expr, 1), min-width)} to #{nth($expr, 3)}).";
+      }
+    }
+
+
+    // Number to number
+    @else if type-of(nth($expr, 1)) == number and type-of(nth($expr, 3)) == number {
+      // Is "from" value smaller than "to" value?
+      @if nth($expr, 1) < nth($expr, 3) {
+        // Yes. Apply media query.
+        @media screen and (min-width: px-rem(nth($expr, 1))) and (max-width: px-rem(nth($expr, 3))) {
+          @content;
+        }
+      } @else {
+        // No. Throw error.
+        @error "Invalid declaration `#{nth($expr, 1)} to #{nth($expr, 3)}`.";
+      }
+    }
+
+
+    // None of the above
+    @else {
+      @error "Invalid declaration `#{$expr}`.";
+    }
+
+  }
+
+
+  // None of the above
+  @else {
+    @error "Invalid declaration `#{$expr}`.";
+  }
+
+}

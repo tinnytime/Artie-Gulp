@@ -1,0 +1,57 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+/// Set a fluid font size range within a viewport width range.
+/// @group api
+///
+/// @author Mike Riethmuller
+/// @link
+///   http://madebymike.com.au/writing/precise-control-responsive-typography/
+///   Precise control over responsive typography
+///
+/// @param {number} $min-vw Minimum viewport width
+/// @param {number} $max-vw Maximum viewport width
+/// @param {number} $min-font-size Minimum font size
+/// @param {number} $max-font-size Maximum font size
+///
+/// @example scss Input
+///   html {
+///     @include fluid-type(64px, 1600px, 12px, 24px);
+///   }
+/// @example css Output
+///   html {
+///     font-size: 12px;
+///   }
+///   @media screen and (min-width: 4rem) and (max-width: 99.9375rem) {
+///     html {
+///       font-size: calc(12px + (24 - 12) * ((100vw - 64px) / (1600 - 64)));
+///     }
+///   }
+///   @media screen and (min-width: 100rem) {
+///     html {
+///       font-size: 24px;
+///     }
+///   }
+///
+/// @require {function} px-rem
+/// @require {function} strip-unit
+
+@mixin fluid-type($min-vw, $max-vw, $min-font-size, $max-font-size) {
+  & {
+    font-size: $min-font-size;
+
+    @media screen and (min-width: px-rem($min-vw)) and (max-width: px-rem($max-vw - 1)) {
+      font-size: calc(#{$min-font-size} + (#{strip-unit($max-font-size)} - #{strip-unit($min-font-size)}) * ((100vw - #{$min-vw}) / (#{strip-unit($max-vw)} - #{strip-unit($min-vw)})));
+    }
+
+    @media screen and (min-width: px-rem($max-vw)) {
+      font-size: $max-font-size;
+    }
+  }
+}

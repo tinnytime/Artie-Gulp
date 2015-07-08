@@ -1,0 +1,52 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+// Turn these placeholders into classes (%InputField -> .InputField)
+// for referencing them from the markup.
+// This way these styles won't pollute the output if left unused.
+
+
+//  INPUT FIELD ------------------------------------------------------------
+
+%InputField {
+  @extend %transitions;
+  @include prefixer(appearance, none, webkit moz);
+  border-radius: 0;
+  display: inline-block;
+  vertical-align: top;
+
+  &::placeholder {
+    color: rgba($mineshaft, 0.5);
+    opacity: 1;
+  }
+
+  &:hover:not(:disabled) {
+
+  }
+
+  &:focus:not(:disabled) {
+
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+
+
+
+//  TEXT AREA --------------------------------------------------------------
+
+%TextArea {
+  @extend %InputField;
+  height: auto;
+  line-height: inherit;
+  resize: vertical;
+}

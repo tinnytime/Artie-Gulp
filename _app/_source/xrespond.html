@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Responsive design testing tool</title>
+        <style>
+            * { margin: 0; padding: 0; }
+            html { height: 100%; }
+            body { font-family: sans-serif; font-size: .875em; min-height: 100%; }
+            h1 { font-size: 1.125em; margin-bottom: 16px; }
+            .group:before, .group:after { content: ""; display: table; }
+            .group:after { clear: both; }
+            #url { display: none; }
+            #frames { padding: 32px; }
+            .frame { float: left; margin-right: 32px; position: relative; }
+            .frame:last-child { margin-right: 0; }
+            .gap { margin-right: 96px; }
+            iframe { border: 1px solid #999; box-shadow: 0 0 16px rgba(0,0,0,.1); display: block; height: 480px; }
+            iframe::-webkit-scrollbar { display: none; }
+            body[data-theme="dark"] { background: #333; }
+            body[data-theme="dark"] h1 { color: #fff; }
+            body[data-theme="dark"] iframe { background: #fff; border-color: #333; box-shadow: 0 0 16px rgba(0,0,0,.5); }
+        </style>
+        <script>
+            var fullScreen = true;
+            var defaultURL = 'http://localhost';
+        </script>
+    </head>
+    <body data-theme="dark">
+        <div id="frames" class="group" style="width: 8158px;">
+            <div id="f1" class="frame gap">
+                <h1>128px -- Watch</h1>
+                <iframe width="128" height="128" sandbox="allow-same-origin allow-forms allow-scripts" seamless></iframe>
+            </div>
+            <div id="f2" class="frame gap">
+                <h1>320px -- Phone</h1>
+                <iframe width="320" height="480" sandbox="allow-same-origin allow-forms allow-scripts" seamless></iframe>
+            </div>
+            <div id="f3" class="frame">
+                <h1>600px -- 7" Tablet</h1>
+                <iframe width="600" height="1024" sandbox="allow-same-origin allow-forms allow-scripts" seamless></iframe>
+            </div>
+            <div id="f4" class="frame">
+                <h1>768px -- iPad portrait</h1>
+                <iframe width="768" height="1024" sandbox="allow-same-origin allow-forms allow-scripts" seamless></iframe>
+            </div>
+            <div id="f5" class="frame gap">
+                <h1>1024px -- iPad landscape</h1>
+                <iframe width="1024" height="768" sandbox="allow-same-origin allow-forms allow-scripts" seamless></iframe>
+            </div>
+            <div id="f6" class="frame">
+                <h1>1366px -- Laptop</h1>
+                <iframe width="1366" height="768" sandbox="allow-same-origin allow-forms allow-scripts" seamless></iframe>
+            </div>
+            <div id="f7" class="frame">
+                <h1>1600px -- Desktop</h1>
+                <iframe width="1600" height="900" sandbox="allow-same-origin allow-forms allow-scripts" seamless></iframe>
+            </div>
+            <div id="f8" class="frame">
+                <h1>1920px -- Full HD TV</h1>
+                <iframe width="1920" height="1080" sandbox="allow-same-origin allow-forms allow-scripts" seamless></iframe>
+            </div>
+        </div>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script>function allLoaded(){var a=[];$("#frames iframe").each(function(){$(this).data("loaded")||a.push(!1)});var b=a.length>0?!1:!0;return b}function loadPage(a,b){"http://"!=b.substr(0,7)&&(b="http://"+b),$("#frames iframe").not(a).data("loaded",!1),$("#frames iframe").not(a).attr("src",b)}function resizeFrames(){if(fullScreen===!0){var a=$("html").height(),b=$("#frames").outerHeight(),c=$("#frames iframe").outerHeight(),d=b-c,e=a-d-2;$("#frames iframe").css({height:e})}}$(document).ready(function(){resizeFrames(),loadPage("",defaultURL),$("#frames iframe").on("load",function(){var a=$(this),b="",c=!1;try{b=a.contents().get(0).location.href}catch(d){c=!0,b=""!=$('#url input[type="text"]').val()?$('#url input[type="text"]').val():defaultURL}allLoaded()?c?loadPage("",defaultURL):loadPage(a,b):(c=!1,$(this).data("loaded",!0))})}),$(window).on("resize",function(){resizeFrames()});</script>
+    </body>
+</html>

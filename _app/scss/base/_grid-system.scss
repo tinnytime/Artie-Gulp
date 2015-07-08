@@ -1,0 +1,42 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+@if map-get($grid-system, output-styles) {
+
+  // Generate variables
+  $breakpoint:   map-get($grid-system, breakpoint);
+  $column-count: map-get($grid-system, column-count);
+  $gutter-width: map-get($grid-system, gutter-width);
+
+
+  // Output styles
+  @include media(from $breakpoint) {
+    .Grid {
+      font-size: 0;
+      margin-left: $gutter-width * -1;
+      margin-right: $gutter-width * -1;
+      text-align: center;
+    }
+
+    .Grid-column {
+      display: inline-block;
+      font-size: 1rem;
+      padding-left: $gutter-width;
+      padding-right: $gutter-width;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    @for $i from 1 through $column-count {
+      .Grid-column--#{$i} {
+        width: percentage(1 / $column-count * $i);
+      }
+    }
+  }
+}

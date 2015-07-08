@@ -1,0 +1,40 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+// Turn this placeholder into class (%Table -> .Table)
+// for referencing it from the markup.
+// This way these styles won't pollute the output if left unused.
+
+%Table {
+
+  caption {
+    text-align: left;
+  }
+
+  thead {
+
+    th {
+      text-align: left;
+    }
+  }
+
+  tbody {
+
+    td {
+
+    }
+  }
+
+  tfoot {
+
+    td {
+
+    }
+  }
+}

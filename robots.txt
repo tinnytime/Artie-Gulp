@@ -1,0 +1,32 @@
+#   ========================================================================
+#
+#     Artie front-end framework
+#     https://github.com/indrekpaas/Artie
+#     MIT licensed
+#
+#   ========================================================================
+
+
+#   DIGG MIRROR ------------------------------------------------------------
+
+User-agent: duggmirror
+Disallow: /
+
+
+
+
+#   ARTIE ------------------------------------------------------------------
+
+User-agent: *
+Disallow: /.codekit-cache/
+Disallow: /.gh-pages/
+Disallow: /.git/
+Disallow: /_app/
+Disallow: /.editorconfig
+Disallow: /.gitattributes
+Disallow: /.gitignore
+Disallow: /.sassdocrc
+Disallow: /config.codekit
+Disallow: /LICENSE
+Disallow: /package.json
+Disallow: /README.md

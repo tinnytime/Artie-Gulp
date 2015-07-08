@@ -1,0 +1,31 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+/// Hide visually any element while maintaining its accessibility.
+/// @group helpers
+///
+/// @author Jonathan Snook
+/// @link
+///   http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+///   Hiding Content for Accessibility
+
+@mixin visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+%visually-hidden {
+  @include visually-hidden;
+}

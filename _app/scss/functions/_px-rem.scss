@@ -1,0 +1,29 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+/// Convert pixel value to rem value.
+/// @group api
+///
+/// @author Tobias Sjösten
+/// @link
+///   http://vvv.tobiassjosten.net/css/px-to-em-with-sass/
+///   PX to EM with Sass
+///
+/// @param {number} $px Pixel value
+///
+/// @example scss Input
+///   @media (min-width: px-rem(600px)) { ... }
+/// @example css Output
+///   @media (min-width: 37.5rem) { ... }
+///
+/// @return {number}
+
+@function px-rem($px) {
+  @return ($px / 16px) * 1rem;
+}

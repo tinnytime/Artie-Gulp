@@ -1,0 +1,27 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+/// Hide element's text node.
+/// @group helpers
+///
+/// @author Scott Kellum
+/// @link
+///   http://www.zeldman.com/2012/03/01/replacing-the-9999px-hack-new-image-replacement/
+///   Replacing the -9999px hack (new image replacement)
+
+@mixin hide-text {
+  overflow: hidden;
+  text-align: left;
+  text-indent: 100%;
+  white-space: nowrap;
+}
+
+%hide-text {
+  @include hide-text;
+}

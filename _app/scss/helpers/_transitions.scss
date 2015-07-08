@@ -1,0 +1,33 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+/// Add a set of transitions to an element.
+/// @group helpers
+///
+/// @author Indrek Paas
+/// @link
+///   http://www.w3.org/TR/css3-transitions/#animatable-properties
+///   Animatable CSS properties
+
+@mixin transitions {
+  transition-duration: 0.15s;
+  transition-property:
+    background-color,
+    background-image,
+    border-color,
+    box-shadow,
+    color,
+    opacity,
+    text-shadow;
+  transition-timing-function: ease-out;
+}
+
+%transitions {
+  @include transitions;
+}

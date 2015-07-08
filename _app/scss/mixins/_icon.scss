@@ -1,0 +1,52 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+/// Add an icon to any pseudo/element.
+/// @group icon-font
+///
+/// @author Indrek Paas
+///
+/// @param {string} $icon Icon name
+///
+/// @example scss Input
+///   div::before {
+///     @include icon(icon-01);
+///   }
+///   span::before {
+///     @include icon(icon-02);
+///   }
+/// @example css Output
+///   div::before, span::before {
+///     display: inline-block;
+///     font-family: "Icons";
+///     font-style: normal;
+///     font-variant: normal;
+///     font-weight: normal;
+///     speak: none;
+///     text-transform: none;
+///     vertical-align: top;
+///   }
+///   div::before {
+///     content: "\e600";
+///   }
+///   span::before {
+///     content: "\e601";
+///   }
+///
+/// @require {placeholder} icon-font
+/// @require {variable} icons
+
+@mixin icon($icon) {
+  @if map-has-key($icons, $icon) {
+    @extend %icon-font;
+    content: #{"\"" + map-get($icons, $icon) + "\""};
+  } @else {
+    @error "Invalid icon `#{$icon}`.";
+  }
+}

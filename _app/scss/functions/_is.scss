@@ -1,0 +1,35 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+/// Validate a single value against multiple values—a function for
+/// utilizing `index()` instead of multiple equal assignments.
+/// @group api
+///
+/// @author Hugo Giraudel
+/// @link
+///   http://www.sitepoint.com/tips-help-level-up-sass/
+///   Tips to Help You Level Up Your Sass
+///
+/// @param {string} $value Value to be validated
+/// @param {string} $values Values to be validated against
+///
+/// @example scss
+///   @if is("inherit", "inherit" "initial") {
+///     // => true
+///   }
+/// @example scss
+///   @if is("auto", "inherit" "initial") {
+///     // => false
+///   }
+///
+/// @return {bool | null}
+
+@function is($value, $values) {
+  @return not not index($values, $value);
+}

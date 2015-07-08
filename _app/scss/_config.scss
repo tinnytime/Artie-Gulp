@@ -1,0 +1,132 @@
+//  ========================================================================
+//
+//    Artie front-end framework
+//    https://github.com/indrekpaas/Artie
+//    MIT licensed
+//
+//  ========================================================================
+
+
+//  COLORS -----------------------------------------------------------------
+
+// Use this tool to help you with naming your color variables:
+// http://chir.ag/projects/name-that-color/
+
+$black:     #000000;
+$mineshaft: #333333;
+$white:     #ffffff;
+
+
+
+
+//  DEVICES ----------------------------------------------------------------
+
+/// Customizable device list for using with `media` mixin.
+/// @group media-queries
+/// @type map
+///
+/// @author Indrek Paas
+///
+/// @prop {map} laptop Device name
+/// @prop {number} laptop.min-width [1025px] Minimum device width
+/// @prop {number} laptop.max-width [1366px] Maximum device width
+
+$devices: (
+  watch: (
+    min-width: 128px,
+    max-width: 319px
+  ),
+  phone: (
+    min-width: 320px,
+    max-width: 599px
+  ),
+  tablet7: (
+    min-width: 600px,
+    max-width: 767px
+  ),
+  tablet: (
+    min-width: 768px,
+    max-width: 1024px
+  ),
+  laptop: (
+    min-width: 1025px,
+    max-width: 1366px
+  ),
+  desktop: (
+    min-width: 1367px,
+    max-width: 1600px
+  ),
+  tv: (
+    min-width: 1601px,
+    max-width: 1920px
+  ),
+  cinema: (
+    min-width: 1921px,
+    max-width: 2560px
+  )
+);
+
+
+
+
+//  FONT STACKS ------------------------------------------------------------
+
+$helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+
+
+
+//  MODULE OPTIONS ---------------------------------------------------------
+
+/// Apply consistent content styling for text-rich elements with
+/// customizable font size scales and line height.
+/// Please see the **Links** section for available font scales.
+/// @group entry-content
+/// @type map
+///
+/// @author Indrek Paas
+/// @link
+///   https://github.com/indrekpaas/Artie/blob/master/_app/scss/base/_entry-content.scss
+///   Artie/_app/scss/base/_entry-content.scss
+///
+/// @prop {string} font-scale [default] Font size scale
+/// @prop {number} line-height [1.625] Line height
+/// @prop {bool} output-styles [false] Include styles in output
+///
+/// @example html Usage
+///   <div class="EntryContent"> ... </div>
+
+$entry-content: (
+  font-scale    : default,
+  line-height   : 1.625,
+  output-styles : false
+);
+
+
+/// Create a simple grid system with customizable breakpoint,
+/// column count and gutter width.
+/// @group grid-system
+/// @type map
+///
+/// @author Indrek Paas
+/// @link
+///   https://github.com/indrekpaas/Artie/blob/master/_app/scss/base/_grid-system.scss
+///   Artie/_app/scss/base/_grid-system.scss
+///
+/// @prop {string | number} breakpoint [tablet] Breakpoint name (from `$devices`) or pixel value to apply the styles from
+/// @prop {number} column-count [12] Number of columns
+/// @prop {number} gutter-width [1rem] Column gutter width
+/// @prop {bool} output-styles [false] Include styles in output
+///
+/// @example html Usage
+///   <div class="Grid">
+///     <div class="Grid-column Grid-column--6"> ... </div>
+///     <div class="Grid-column Grid-column--6"> ... </div>
+///   </div>
+
+$grid-system: (
+  breakpoint    : tablet,
+  column-count  : 12,
+  gutter-width  : 1rem,
+  output-styles : false
+);
