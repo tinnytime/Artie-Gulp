@@ -55,6 +55,24 @@ var settings = {
 };
 
 /**
+ * @task sass
+ * @usage $ gulp sass
+ * Compiles sass files
+ */
+gulp.task('styles', function() {
+    return sass(settings.sass.input.path + settings.sass.input.file, {
+            style: settings.sass.output.style,
+            sourcemap: settings.sass.output.sourcemap
+        })
+        .pipe( autoprefixer('last 2 version') )
+        .pipe( gulp.dest(settings.sass.output.path) )
+        .pipe( sourcemaps.write('./') )
+        .pipe( gulp.dest(settings.sass.output.path )
+        .pipe( notify({ message: settings.sass.output.message }) )
+    );
+});
+
+/**
  * @task lint
  * Lints all scripts in the scripts folder
  */
@@ -85,31 +103,6 @@ gulp.task('bundle', function () {
 });
 
 /**
- * @taske scripts
- * Runs lint and bundle
- */
-gulp.task('scripts', gulp.series('lint', 'bundle'));
-
-/**
- * @task sass
- * @usage $ gulp sass
- * Compiles sass files
- */
-gulp.task('styles', function() {
-    return sass(settings.sass.input.path + settings.sass.input.file, {
-            style: settings.sass.output.style,
-            sourcemap: settings.sass.output.sourcemap
-        })
-        .pipe( autoprefixer('last 2 version') )
-        .pipe( gulp.dest(settings.sass.output.path) )
-        .pipe( sourcemaps.write('./') )
-        .pipe( gulp.dest(settings.sass.output.path )
-        .pipe( notify({ message: settings.sass.output.message }) )
-    );
-});
-
-
-/**
  * @task clean
  * Removes all compiled sass & javascript files
  */
@@ -120,6 +113,12 @@ gulp.task('clean', function(callback) {
         settings.js.output.path
     ], callback);
 });
+
+/**
+ * @taske scripts
+ * Runs lint and bundle
+ */
+gulp.task('scripts', gulp.series('lint', 'bundle'));
 
 /**
  * @task watch
