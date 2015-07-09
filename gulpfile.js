@@ -137,7 +137,5 @@ gulp.task('watch', function() {
  * @usage $ gulp
  */
 gulp.task('default',
-    gulp.series('clean',
-        gulp.parallel('watch')
-    )
+    gulp.series('watch')
 );
