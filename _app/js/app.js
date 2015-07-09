@@ -6,22 +6,11 @@
 //
 //  ========================================================================
 
-(function($) {
+;(function(module, $, undefined) {
     'use strict';
 
-    var App = {
-        // Init App
-        init: function() {
-            App.myFunction();
-        },
+    var helloWorld = require('./modules/hello-world');
 
-        // myFunction
-        myFunction: function() {
+    helloWorld('World');
 
-        }
-    };
-
-    $(function() {
-        App.init();
-    });
-})(jQuery);
+})(window.app = window.app || {}, jQuery);

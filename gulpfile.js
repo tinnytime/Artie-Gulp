@@ -12,6 +12,7 @@ var gulp            = require('gulp'),
     sass            = require('gulp-ruby-sass'),
     sourcemaps      = require('gulp-sourcemaps');
     autoprefixer    = require('gulp-autoprefixer'),
+    browserify      = require('browserify'),
     jshint          = require('gulp-jshint'),
     uglify          = require('gulp-uglify'),
     imagemin        = require('gulp-imagemin'),
@@ -20,6 +21,9 @@ var gulp            = require('gulp'),
     notify          = require('gulp-notify'),
     cache           = require('gulp-cache'),
     del             = require('del');
+    source          = require('vinyl-source-stream'),
+    jshintStylish   = require('jshint-stylish'),
+    buffer          = require('vinyl-buffer');
 
 // Settings
 var settings = {
@@ -40,6 +44,7 @@ var settings = {
     js: {
         input: {
             files: '_app/js/**/*.js',
+            file: '_app/js/app.js'
         },
         output: {
             file: 'main.js',
@@ -62,11 +67,48 @@ var settings = {
 };
 
 /**
+ * @task lint
+ * Lints all scripts in the scripts folder
+ */
+gulp.task('lint', function () {
+    'use strict';
+
+    return gulp.src(settings.js.input.files)
+        .pipe(jshint())
+        .pipe(jshint.reporter(jshintStylish));
+});
+
+/**
+ * @task browserify
+ * Compiles javascript modules
+ */
+gulp.task('bundle', function () {
+    return browserify({
+            entries: [settings.js.input.file],
+            debug: true
+        }).bundle()
+        .pipe(source(settings.js.output.file))
+        .pipe(buffer())
+        .pipe(sourcemaps.init({
+            loadMaps: true
+        }))
+        .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest(settings.js.output.path));
+
+});
+
+/**
+ * @taske scripts
+ * Runs lint and bundle
+ */
+gulp.task('scripts', gulp.series('lint', 'bundle'));
+
+/**
  * @task sass
  * @usage $ gulp sass
  * Compiles sass files
  */
-gulp.task('sass', function() {
+gulp.task('styles', function() {
     return sass(settings.sass.input.path + settings.sass.input.file, {
             style: settings.sass.output.style,
             sourcemap: settings.sass.output.sourcemap
@@ -77,22 +119,6 @@ gulp.task('sass', function() {
         .pipe( gulp.dest(settings.sass.output.path )
         .pipe( notify({ message: settings.sass.output.message }) )
     );
-});
-
-/**
- * @task scripts
- * @usage $ gulp scripts
- * Checks syntax and combines javascript files
-*/
-gulp.task('scripts', function() {
-    return gulp.src(settings.js.input.files)
-        .pipe( jshint('.jshintrc') )
-        .pipe( jshint.reporter('default') )
-        .pipe( concat(settings.js.output.file) )
-        .pipe( gulp.dest(settings.js.output.path) )
-        .pipe( uglify() )
-        .pipe( gulp.dest(settings.js.output.path) )
-        .pipe( notify({ message: settings.js.output.message }) );
 });
 
 /**
@@ -131,15 +157,17 @@ gulp.task('clean', function(callback) {
  * Listens for changes to different files and runs the corresponding task
  */
 gulp.task('watch', function() {
-    gulp.watch(settings.sass.input.files,   ['sass']);
-    gulp.watch(settings.js.input.files,     ['scripts']);
-    gulp.watch(settings.images.input.files, ['images']);
+    gulp.watch(settings.sass.input.files,   gulp.task('styles'));
+    gulp.watch(settings.js.input.files,     gulp.task('scripts'));
+    gulp.watch(settings.images.input.files, gulp.task('images'));
 });
 
 /**
  * @task default
  * @usage $ gulp
  */
-gulp.task('default', ['clean'], function() {
-    gulp.start('sass', 'scripts', 'images');
-});
+gulp.task('default',
+    gulp.series('clean',
+        gulp.parallel('scripts', 'styles')
+    )
+);
