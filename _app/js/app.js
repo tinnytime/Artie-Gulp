@@ -9,8 +9,8 @@
 ;(function(module, $, undefined) {
     'use strict';
 
-    var helloWorld = require('./modules/hello-world');
+    var hello = require('./modules/hello-world');
 
-    helloWorld('World');
+    hello('World');
 
 })(window.app = window.app || {}, jQuery);
