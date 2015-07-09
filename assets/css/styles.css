@@ -116,6 +116,7 @@ img {
   max-width: 100%;
   vertical-align: middle;
 }
+
 img[width] {
   max-width: none;
 }
@@ -239,7 +240,9 @@ optgroup {
 a {
   background-color: transparent;
 }
-a:active, a:hover {
+
+a:active,
+a:hover {
   outline: 0;
 }
 
@@ -263,24 +266,29 @@ html {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   line-height: 1.375;
 }
+
 html {
   font-size: 12px;
 }
+
 @media screen and (min-width: 4rem) and (max-width: 99.9375rem) {
   html {
     font-size: calc(12px + (24 - 12) * ((100vw - 64px) / (1600 - 64)));
   }
 }
+
 @media screen and (min-width: 100rem) {
   html {
     font-size: 24px;
   }
 }
+
 html ::-moz-selection {
   background: #333333;
   color: #ffffff;
   text-shadow: none;
 }
+
 html ::selection {
   background: #333333;
   color: #ffffff;
@@ -296,8 +304,8 @@ html ::selection {
 a {
   -webkit-transition-duration: 0.15s;
           transition-duration: 0.15s;
-  -webkit-transition-property: background-color, background-image, border-color, box-shadow, color, opacity, text-shadow;
-          transition-property: background-color, background-image, border-color, box-shadow, color, opacity, text-shadow;
+  -webkit-transition-property: background-color,     background-image,     border-color,     box-shadow,     color,     opacity,     text-shadow;
+          transition-property: background-color,     background-image,     border-color,     box-shadow,     color,     opacity,     text-shadow;
   -webkit-transition-timing-function: ease-out;
           transition-timing-function: ease-out;
 }
@@ -313,7 +321,7 @@ body {
 }
 
 .BodyWrap {
-  background: yellow;
+  background: pink;
 }
 
 .Container {
@@ -327,10 +335,11 @@ body {
 .SiteLogo {
   display: inline-block;
 }
+
 .SiteLogo svg {
   height: 4em;
   vertical-align: top;
   width: 10em;
 }
 
-
+/*# sourceMappingURL=styles.css.map */

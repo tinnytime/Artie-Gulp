@@ -9,7 +9,7 @@
 
 // Modules
 var gulp            = require('gulp'),
-    sass            = require('gulp-ruby-sass'),
+    sass            = require('gulp-sass'),
     sourcemaps      = require('gulp-sourcemaps');
     autoprefixer    = require('gulp-autoprefixer'),
     browserify      = require('browserify'),
@@ -23,7 +23,8 @@ var gulp            = require('gulp'),
     cache           = require('gulp-cache'),
     del             = require('del');
     source          = require('vinyl-source-stream'),
-    buffer          = require('vinyl-buffer');
+    buffer          = require('vinyl-buffer'),
+    ignore          = require('gulp-ignore');
 
 // Settings
 var settings = {
@@ -59,19 +60,20 @@ var settings = {
  * @usage $ gulp sass
  * Compiles sass files
  */
-gulp.task('styles', function() {
-    return sass(settings.sass.input.path + settings.sass.input.file, {
-            style: settings.sass.output.style,
-            sourcemap: settings.sass.output.sourcemap
-        })
-        .pipe( autoprefixer('last 2 version') )
-        .pipe( gulp.dest(settings.sass.output.path) )
-        .pipe( sourcemaps.write('./') )
-        .pipe( gulp.dest(settings.sass.output.path )
-        .pipe( notify({ message: settings.sass.output.message }) )
-    );
-});
+gulp.task('styles', function () {
+    'use strict';
 
+    return gulp.src('_app/scss/styles.scss')
+        .pipe(sourcemaps.init())
+        .pipe(sass({
+            outputStyle: 'expanded',
+            precision: 14,
+        }))
+        .pipe(autoprefixer())
+        .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest(settings.sass.output.path))
+        .pipe(ignore.exclude('*.map'));
+});
 /**
  * @task lint
  * Lints all scripts in the scripts folder
@@ -136,6 +138,6 @@ gulp.task('watch', function() {
  */
 gulp.task('default',
     gulp.series('clean',
-        gulp.parallel('scripts', 'styles')
+        gulp.parallel('watch')
     )
 );
