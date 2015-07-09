@@ -14,6 +14,7 @@ var gulp            = require('gulp'),
     autoprefixer    = require('gulp-autoprefixer'),
     browserify      = require('browserify'),
     jshint          = require('gulp-jshint'),
+    jshintStylish   = require('jshint-stylish'),
     uglify          = require('gulp-uglify'),
     imagemin        = require('gulp-imagemin'),
     rename          = require('gulp-rename'),
@@ -22,7 +23,6 @@ var gulp            = require('gulp'),
     cache           = require('gulp-cache'),
     del             = require('del');
     source          = require('vinyl-source-stream'),
-    jshintStylish   = require('jshint-stylish'),
     buffer          = require('vinyl-buffer');
 
 // Settings
@@ -34,7 +34,7 @@ var settings = {
             path: '_app/scss/',
         },
         output: {
-            style: 'compressed',
+            style: 'expanded',
             sourcemap: true,
             file: 'styles.css',
             path: 'assets/css/',
@@ -50,18 +50,6 @@ var settings = {
             file: 'main.js',
             path: 'assets/js',
             message: 'JS task complete'
-        }
-    },
-    images: {
-        optimizationLevel: 3,
-        progressive: true,
-        interlaced: true,
-        input: {
-            files: 'assets/images/**/*',
-        },
-        output: {
-            path: 'assets/images/',
-            message: 'Images task complete'
         }
     }
 };
@@ -94,7 +82,6 @@ gulp.task('bundle', function () {
         }))
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(settings.js.output.path));
-
 });
 
 /**
@@ -121,23 +108,6 @@ gulp.task('styles', function() {
     );
 });
 
-/**
- * @task images
- * @usage $ gulp images
- * Compresses images
- */
-gulp.task('images', function() {
-    return gulp.src(settings.images.input.files)
-        .pipe(
-            imagemin({
-                optimizationLevel: settings.images.optimizationLevel,
-                progressive: settings.images.progressive,
-                interlaced:settings.images.interlaced
-            })
-        )
-        .pipe( gulp.dest(settings.images.output.path) )
-        .pipe( notify({ message: settings.images.output.message }) );
-});
 
 /**
  * @task clean
@@ -157,9 +127,8 @@ gulp.task('clean', function(callback) {
  * Listens for changes to different files and runs the corresponding task
  */
 gulp.task('watch', function() {
-    gulp.watch(settings.sass.input.files,   gulp.task('styles'));
-    gulp.watch(settings.js.input.files,     gulp.task('scripts'));
-    gulp.watch(settings.images.input.files, gulp.task('images'));
+    gulp.watch(settings.sass.input.files, gulp.task('styles'));
+    gulp.watch(settings.js.input.files, gulp.task('scripts'));
 });
 
 /**
