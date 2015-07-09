@@ -75,7 +75,8 @@ gulp.task('sass', function() {
         .pipe( gulp.dest(settings.sass.output.path) )
         .pipe( sourcemaps.write('./') )
         .pipe( gulp.dest(settings.sass.output.path )
-        .pipe( notify({ message: settings.sass.output.message }) );
+        .pipe( notify({ message: settings.sass.output.message }) )
+    );
 });
 
 /**
@@ -103,7 +104,7 @@ gulp.task('images', function() {
     return gulp.src(settings.images.input.files)
         .pipe(
             imagemin({
-                optimizationLevel settings.images.optimizationLevel,
+                optimizationLevel: settings.images.optimizationLevel,
                 progressive: settings.images.progressive,
                 interlaced:settings.images.interlaced
             })
