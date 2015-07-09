@@ -11,17 +11,47 @@
     'use strict';
 
     var hello = require('./modules/hello-world');
+    var Person = require('./modules/person');
 
     hello('World');
 
-})(window.app = window.app || {}, jQuery);
+    var human = new Person();
+    
+    human.setName('Joshua').setAge(25).setSex('Male');
+    console.log(human);
 
-},{"./modules/hello-world":2}],2:[function(require,module,exports){
+})(window.app = window.app || {}, jQuery);
+},{"./modules/hello-world":2,"./modules/person":3}],2:[function(require,module,exports){
 'use strict';
 
 module.exports = function(name) {
 	console.log('Hello, ' + name);
 };
+},{}],3:[function(require,module,exports){
+'use strict';
+
+var Person = function () {
+	this.name = null;
+	this.age = 0;
+	this.sex = null;
+};
+
+Person.prototype.setName = function (name) {
+	this.name = name;
+	return this;
+};
+
+Person.prototype.setAge = function (age) {
+	this.age = age;
+	return this;
+};
+
+Person.prototype.setSex = function (sex) {
+	this.sex = sex;
+	return this;
+};
+
+module.exports = Person;
 },{}]},{},[1])
 
 
