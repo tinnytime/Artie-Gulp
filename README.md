@@ -6,7 +6,7 @@ Artie is a lightweight and efficient front-end framework for developing fast and
 ## Quick start
 
 * `sudo npm install` to install dependencies
-* `gulp watch` to listen for scss & js changes
+* `gulp` to listen for scss & js changes
 
 
 ## Browser support
